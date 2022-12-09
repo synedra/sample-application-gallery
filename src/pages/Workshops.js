@@ -9,9 +9,8 @@ const Home = () => {
   let descendingApps
   //fetch all the applications to your feed
   const fetchData = async () => {
-    const results = await axios.get('/.netlify/functions/getApps')
+    const results = await axios.get('/.netlify/functions/getWorkshops')
     setApps(results.data)
-  
   }
 
   useEffect(() => {
@@ -25,7 +24,7 @@ const Home = () => {
     <>
     {descendingApps && (
       <div className='container'>
-        <div className="row row-cols-2">
+        <div class="row row-cols-2">
           {descendingApps.map((application, index) => (
             <Card
               key={index}

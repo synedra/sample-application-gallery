@@ -1,9 +1,9 @@
 const { getCollection } = require("./utils/astraClient");
 
 exports.handler = async function () {
-  const users = await getCollection();
+  const apps = await getCollection.find({ category: { $eq: "apps" } });
   try {
-    const res = await users.find({});
+    const res = await apps.find({});
     return {
       statusCode: 200,
       body: JSON.stringify(Object.keys(res).map((i) => res[i])),
