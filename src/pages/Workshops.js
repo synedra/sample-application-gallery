@@ -1,31 +1,26 @@
 import React, { useState, useEffect } from 'react'
-import FollowersColumn from '../components/FollowersColumn'
 import Card from '../components/Card'
-import MiniCard from '../components/MiniCard'
 import axios from 'axios'
 
-const Home = () => {
+const Workshops = () => {
   const [apps, setApps] = useState(null)
-  let descendingApps
-  //fetch all the applications to your feed
+  
   const fetchData = async () => {
-    const results = await axios.get('/.netlify/functions/getWorkshops')
-    setApps(results.data)
+    const results = await axios.get('/.netlify/functions/getCategory?category=workshop')
+    setApps(Object.values(results.data[2]))
   }
 
   useEffect(() => {
     fetchData()
   }, [])
 
-  if (apps) {
-    descendingApps = apps.sort((a, b) => a.id < b.id ? 1 : -1)
-  }
+  
   return (
     <>
-    {descendingApps && (
+    {apps && (
       <div className='container'>
-        <div class="row row-cols-2">
-          {descendingApps.map((application, index) => (
+        <div className="row row-cols-3">
+          {apps.map((application, index) => (
             <Card
               key={index}
               application={application}
@@ -38,4 +33,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Workshops

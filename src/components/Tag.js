@@ -1,14 +1,8 @@
 import React from 'react'
 
-const Tag = ({ tags }) => {
-    {tags.map((tag, index) => {
-        if(tag){
-            return <span key={index} className="card-gallery__tag text-default">{tag}</span>
-        } else {
-            return null
-        }
-    })}
+const Tag = ({ tag }) => {
+  console.log("TAG:" + JSON.stringify(tag))
+  return <h1>Hello</h1>
 }
-
 
 export default Tag

@@ -1,11 +1,11 @@
-import { app } from 'faker/lib/locales/en'
 import React from 'react'
-import Tag from '../components/Tag'
 
 const Card = ({ application, toggleFollow }) => {
-  console.log(application)
-  if (application.badge) {
-    application.heroimage = application.badge
+  console.log(application.stack)
+  console.log(application.tags)
+  let stacklist = null
+  if (application.stack && application.stack[0] != "") {
+     stacklist = "Stack: " + application.stack.join(", ");
   }
   return (
     <div className="col">
@@ -13,37 +13,28 @@ const Card = ({ application, toggleFollow }) => {
       <div className="break" />
       <div className="card-body">
         <div className="row mb-1">
-          <img className="heroImage card-gallery--image" alt={application.name} src={application.heroimage}/>
+         {application?.heroimage && <img className="heroImage card-gallery--image" alt={application.name} src={application.heroimage}/>}
+          {application?.urls?.badge && <img className="heroImage card-gallery--image" alt={application?.name} src={application?.urls.badge} width="150"/>}
           <h4><a className="card-gallery--title"  href={application.urls.github}>{application.name}</a></h4>
-          <span className="extra-small text-night-300">Last Updated: Feb 11, 2022 
+          <span className="extra-small text-night-300"> 
             <i className="icon icon--clock icon--night-300 card-gallery__header-icon"></i>
             {application.duration}
             <i className="icon icon--user icon--night-300 card-gallery__header-icon"></i>
-            {application.difficulty}</span>
-            {application?.tags?.map((tag, index) => {
-               <span key={index} className="card-gallery__tag text-default">{tag}</span>
-            })}
+            {application.skilllevel}
+            </span>
+            <>
+              {application?.tags.map((tag, index) => (
+                <button key={index} className="hold">{tag}</button>
+            ))}
+              {stacklist && <span> {stacklist}</span>}
+            </>
+            {application.language && <h4><a className="card-gallery--title">Language: {application.language?.toString()}</a></h4>}
+            {application.description}
+            </div>
         </div>
-    </div>
     </div>
     </div>
   )
 }
 
-/*
-<div class="row mb-1"><div class="col-12"><img alt="Netflix Clone using GraphQL and Astra DB - Screenshot" class="card-gallery--image" src="https://raw.githubusercontent.com/DataStax-Examples/astra-netflix/master/hero.png"><h4><a class="card-gallery--title" href="/2e0bb003-9a90-4163-b23a-53acc04969fb/sample-app-gallery/astra-netflix">Netflix Clone using GraphQL and Astra DB</a></h4><span class="extra-small text-night-300">Last Updated: Feb 11, 2022<i class="icon icon--clock icon--night-300 card-gallery__header-icon"></i>2 hours<i class="icon icon--user icon--night-300 card-gallery__header-icon"></i>Beginner</span></div></div>
-<div class="col-12"><img alt="Netflix Clone using GraphQL and Astra DB - Screenshot" class="card-gallery--image" src="https://raw.githubusercontent.com/DataStax-Examples/astra-netflix/master/hero.png"><h4><a class="card-gallery--title" href="/2e0bb003-9a90-4163-b23a-53acc04969fb/sample-app-gallery/astra-netflix">Netflix Clone using GraphQL and Astra DB</a></h4><span class="extra-small text-night-300">Last Updated: Feb 11, 2022<i class="icon icon--clock icon--night-300 card-gallery__header-icon"></i>2 hours<i class="icon icon--user icon--night-300 card-gallery__header-icon"></i>Beginner</span></div>
-<img alt="Netflix Clone using GraphQL and Astra DB - Screenshot" class="card-gallery--image" src="https://raw.githubusercontent.com/DataStax-Examples/astra-netflix/master/hero.png">
-<h4><a class="card-gallery--title" href="/2e0bb003-9a90-4163-b23a-53acc04969fb/sample-app-gallery/astra-netflix">Netflix Clone using GraphQL and Astra DB</a></h4>
-<span class="extra-small text-night-300">Last Updated: Feb 11, 2022<i class="icon icon--clock icon--night-300 card-gallery__header-icon"></i>2 hours<i class="icon icon--user icon--night-300 card-gallery__header-icon"></i>Beginner</span>
-<div class="col-12"><img alt="Netflix Clone using GraphQL and Astra DB - Screenshot" class="card-gallery--image" src="https://raw.githubusercontent.com/DataStax-Examples/astra-netflix/master/hero.png"><h4><a class="card-gallery--title" href="/2e0bb003-9a90-4163-b23a-53acc04969fb/sample-app-gallery/astra-netflix">Netflix Clone using GraphQL and Astra DB</a></h4><span class="extra-small text-night-300">Last Updated: Feb 11, 2022<i class="icon icon--clock icon--night-300 card-gallery__header-icon"></i>2 hours<i class="icon icon--user icon--night-300 card-gallery__header-icon"></i>Beginner</span></div>
-<div class="row mb-1"><div class="col-12"><img alt="Netflix Clone using GraphQL and Astra DB - Screenshot" class="card-gallery--image" src="https://raw.githubusercontent.com/DataStax-Examples/astra-netflix/master/hero.png"><h4><a class="card-gallery--title" href="/2e0bb003-9a90-4163-b23a-53acc04969fb/sample-app-gallery/astra-netflix">Netflix Clone using GraphQL and Astra DB</a></h4><span class="extra-small text-night-300">Last Updated: Feb 11, 2022<i class="icon icon--clock icon--night-300 card-gallery__header-icon"></i>2 hours<i class="icon icon--user icon--night-300 card-gallery__header-icon"></i>Beginner</span></div></div>
-<div class="row"><div class="col-auto"><p class="small text-gray-300">Let's code a Netflix Clone with GraphQL Pagination!</p><span class="card-gallery__tag text-default">javascript</span><span class="card-gallery__tag text-default">GraphQL</span></div></div>
-<div class="col-auto"><p class="small text-gray-300">Let's code a Netflix Clone with GraphQL Pagination!</p><span class="card-gallery__tag text-default">javascript</span><span class="card-gallery__tag text-default">GraphQL</span></div>
-<div class="row"><div class="col-auto"><p class="small text-gray-300">Let's code a Netflix Clone with GraphQL Pagination!</p><span class="card-gallery__tag text-default">javascript</span><span class="card-gallery__tag text-default">GraphQL</span></div></div>
-<div class="card-body"><div class="row mb-1"><div class="col-12"><img alt="Netflix Clone using GraphQL and Astra DB - Screenshot" class="card-gallery--image" src="https://raw.githubusercontent.com/DataStax-Examples/astra-netflix/master/hero.png"><h4><a class="card-gallery--title" href="/2e0bb003-9a90-4163-b23a-53acc04969fb/sample-app-gallery/astra-netflix">Netflix Clone using GraphQL and Astra DB</a></h4><span class="extra-small text-night-300">Last Updated: Feb 11, 2022<i class="icon icon--clock icon--night-300 card-gallery__header-icon"></i>2 hours<i class="icon icon--user icon--night-300 card-gallery__header-icon"></i>Beginner</span></div></div><div class="row"><div class="col-auto"><p class="small text-gray-300">Let's code a Netflix Clone with GraphQL Pagination!</p><span class="card-gallery__tag text-default">javascript</span><span class="card-gallery__tag text-default">GraphQL</span></div></div></div>
-<div class="card-footer"><div class="row float-right"><div class="col-auto"><a href="/2e0bb003-9a90-4163-b23a-53acc04969fb/sample-app-gallery/astra-netflix"><button class="btn btn-secondary" type="button">Learn More</button></a></div><div class="col-auto pl-0"><div class="dropdown" data-testid=""><span title="" class=""><button class="astra-MuiButtonBase-root astra-MuiButton-root btn btn-primary undefined astra-MuiButton-text btn btn-primary undefined" tabindex="0" type="button" style="text-transform: none;"><span class="astra-MuiButton-label">Try Now &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span><span class="astra-MuiTouchRipple-root"></span></button></span><div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="https://sag-astra-netflix.netlify.app" rel="noopener noreferrer" target="_blank">View Demo</a><button class="dropdown-item">View in IDE</button><a class="dropdown-item" href="https://github.com/DataStax-Examples/astra-netflix" rel="noopener noreferrer" target="_blank">View on GitHub</a></div></div></div></div></div>
-<div class="card card-gallery shadow shadow--dark h-100"><div class="card-body"><div class="row mb-1"><div class="col-12"><img alt="Netflix Clone using GraphQL and Astra DB - Screenshot" class="card-gallery--image" src="https://raw.githubusercontent.com/DataStax-Examples/astra-netflix/master/hero.png"><h4><a class="card-gallery--title" href="/2e0bb003-9a90-4163-b23a-53acc04969fb/sample-app-gallery/astra-netflix">Netflix Clone using GraphQL and Astra DB</a></h4><span class="extra-small text-night-300">Last Updated: Feb 11, 2022<i class="icon icon--clock icon--night-300 card-gallery__header-icon"></i>2 hours<i class="icon icon--user icon--night-300 card-gallery__header-icon"></i>Beginner</span></div></div><div class="row"><div class="col-auto"><p class="small text-gray-300">Let's code a Netflix Clone with GraphQL Pagination!</p><span class="card-gallery__tag text-default">javascript</span><span class="card-gallery__tag text-default">GraphQL</span></div></div></div><div class="card-footer"><div class="row float-right"><div class="col-auto"><a href="/2e0bb003-9a90-4163-b23a-53acc04969fb/sample-app-gallery/astra-netflix"><button class="btn btn-secondary" type="button">Learn More</button></a></div><div class="col-auto pl-0"><div class="dropdown" data-testid=""><span title="" class=""><button class="astra-MuiButtonBase-root astra-MuiButton-root btn btn-primary undefined astra-MuiButton-text btn btn-primary undefined" tabindex="0" type="button" style="text-transform: none;"><span class="astra-MuiButton-label">Try Now &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span><span class="astra-MuiTouchRipple-root"></span></button></span><div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="https://sag-astra-netflix.netlify.app" rel="noopener noreferrer" target="_blank">View Demo</a><button class="dropdown-item">View in IDE</button><a class="dropdown-item" href="https://github.com/DataStax-Examples/astra-netflix" rel="noopener noreferrer" target="_blank">View on GitHub</a></div></div></div></div></div></div>
-<div class="col-lg-4 mb-3"><div class="card card-gallery shadow shadow--dark h-100"><div class="card-body"><div class="row mb-1"><div class="col-12"><img alt="Netflix Clone using GraphQL and Astra DB - Screenshot" class="card-gallery--image" src="https://raw.githubusercontent.com/DataStax-Examples/astra-netflix/master/hero.png"><h4><a class="card-gallery--title" href="/2e0bb003-9a90-4163-b23a-53acc04969fb/sample-app-gallery/astra-netflix">Netflix Clone using GraphQL and Astra DB</a></h4><span class="extra-small text-night-300">Last Updated: Feb 11, 2022<i class="icon icon--clock icon--night-300 card-gallery__header-icon"></i>2 hours<i class="icon icon--user icon--night-300 card-gallery__header-icon"></i>Beginner</span></div></div><div class="row"><div class="col-auto"><p class="small text-gray-300">Let's code a Netflix Clone with GraphQL Pagination!</p><span class="card-gallery__tag text-default">javascript</span><span class="card-gallery__tag text-default">GraphQL</span></div></div></div><div class="card-footer"><div class="row float-right"><div class="col-auto"><a href="/2e0bb003-9a90-4163-b23a-53acc04969fb/sample-app-gallery/astra-netflix"><button class="btn btn-secondary" type="button">Learn More</button></a></div><div class="col-auto pl-0"><div class="dropdown" data-testid=""><span title="" class=""><button class="astra-MuiButtonBase-root astra-MuiButton-root btn btn-primary undefined astra-MuiButton-text btn btn-primary undefined" tabindex="0" type="button" style="text-transform: none;"><span class="astra-MuiButton-label">Try Now &nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span><span class="astra-MuiTouchRipple-root"></span></button></span><div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="https://sag-astra-netflix.netlify.app" rel="noopener noreferrer" target="_blank">View Demo</a><button class="dropdown-item">View in IDE</button><a class="dropdown-item" href="https://github.com/DataStax-Examples/astra-netflix" rel="noopener noreferrer" target="_blank">View on GitHub</a></div></div></div></div></div></div></div>
-*/
 export default Card

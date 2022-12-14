@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const NavBar = () => {
+const Nav = () => {
     return (
         <nav>
             <ul>
@@ -8,14 +8,17 @@ const NavBar = () => {
                     <Link to="/">Home</Link>
                 </li>
                 <li>
-                    <Link to="/about">About</Link>
+                    <Link to="/workshops">Workshops</Link>
                 </li>
                 <li>
-                    <Link to="/articles">Articles</Link>
+                    <Link to="/apps">Sample Applications</Link>
+                </li>
+                <li>
+                    <Link to="/starters">Starter Applications</Link>
                 </li>
             </ul>
         </nav>
     );
 }
 
-export default NavBar;
+export default Nav;
