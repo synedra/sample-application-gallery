@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Card from '../components/Card'
+import LeftBar from '../components/LeftBar'
 import axios from 'axios'
 
 const StarterApps = () => {
@@ -17,9 +18,14 @@ const StarterApps = () => {
   
   return (
     <>
+    <div className="container">
+      <div className="row">
+        <div className='col-3'>
+        <LeftBar />
+      </div>
     {apps && (
       <div className='container'>
-        <div className="row row-cols-3">
+        <div className="row row-cols-2">
           {apps.map((application, index) => (
             <Card
               key={index}
@@ -29,6 +35,8 @@ const StarterApps = () => {
         </div>
       </div>
     )}
+    </div>
+    </div>
     </>
   )
 }

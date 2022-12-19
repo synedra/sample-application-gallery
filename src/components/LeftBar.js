@@ -7,7 +7,7 @@ const LeftBar = () => {
   
   const fetchData = async () => {
     const results = await axios.get('/.netlify/functions/getTags')
-    setTags(Object.values(results))
+    setTags(Object.values(results.data))
   }
 
   useEffect(() => {
@@ -15,7 +15,6 @@ const LeftBar = () => {
   }, [])
 
   const onClick = (tagname) => {
-    console.log(filters)
     let tagindex = -1
     if ((filters && filters.length) > 0) {
       tagindex = filters.indexOf(tagname)
@@ -28,8 +27,7 @@ const LeftBar = () => {
       }
     }
   };
-
-  
+   
   return (
     <>
       {tagset && (

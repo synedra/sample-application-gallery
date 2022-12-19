@@ -18,10 +18,9 @@ const getAstraClient = async () => {
 
 const getCollection = async () => {
   const documentClient = await getAstraClient();
-  console.log("allappsnow")
   return documentClient
     .namespace(process.env.ASTRA_DB_KEYSPACE)
-    .collection("allappsnow");
+    .collection("apps1219");
 };
 
 module.exports = { getAstraClient, getCollection };

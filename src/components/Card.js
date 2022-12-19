@@ -1,12 +1,12 @@
 import React from 'react'
 
-const Card = ({ application, toggleFollow }) => {
-  console.log(application.stack)
-  console.log(application.tags)
+const Card = ({ application }) => {
   let stacklist = null
-  if (application.stack && application.stack[0] != "") {
+  if (application.stack && application.stack) {
      stacklist = "Stack: " + application.stack.join(", ");
   }
+  console.log(JSON.stringify(application))
+
   return (
     <div className="col">
     <div className="card card-gallery shadow shadow--dark h-100">
@@ -14,8 +14,8 @@ const Card = ({ application, toggleFollow }) => {
       <div className="card-body">
         <div className="row mb-1">
          {application?.heroimage && <img className="heroImage card-gallery--image" alt={application.name} src={application.heroimage}/>}
-          {application?.urls?.badge && <img className="heroImage card-gallery--image" alt={application?.name} src={application?.urls.badge} width="150"/>}
-          <h4><a className="card-gallery--title"  href={application.urls.github}>{application.name}</a></h4>
+          {application?.urls?.badge && <img className="heroImage card-gallery--image" alt={application?.name} src={application?.urls?.badge} width="150"/>}
+          <h4><a className="card-gallery--title"  href={application?.urls?.github}>{application.name}</a></h4>
           <span className="extra-small text-night-300"> 
             <i className="icon icon--clock icon--night-300 card-gallery__header-icon"></i>
             {application.duration}
@@ -23,7 +23,7 @@ const Card = ({ application, toggleFollow }) => {
             {application.skilllevel}
             </span>
             <>
-              {application?.tags.map((tag, index) => (
+              {application?.tags?.map((tag, index) => (
                 <button key={index} className="hold">{tag}</button>
             ))}
               {stacklist && <span> {stacklist}</span>}

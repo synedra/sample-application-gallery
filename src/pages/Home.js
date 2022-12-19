@@ -1,36 +1,35 @@
 import React, { useState, useEffect } from 'react'
 import Card from '../components/Card'
+import LeftBar from '../components/LeftBar'
 import axios from 'axios'
 
 const Home = () => {
   const [apps, setApps] = useState(null)
-  const [tagset, setTags] = useState(null)
   
   const fetchData = async () => {
     const results = await axios.get('/.netlify/functions/getCategory?category=apps')
-    setApps(Object.values(results.data[1]))
-  }
-
-  const getTags = async () => {
-    const results = await axios.get('/.netlify/functions/getTags')
-    setTags(Object.values(results.data))
+    setApps(results.data)
+    
   }
 
   useEffect(() => {
     fetchData()
-    getTags()
   }, [])
 
-  console.log(JSON.stringify(tagset))
 
-  console.log(JSON.stringify(apps))
+  console.log("SETAPPS IS" + JSON.stringify(apps))
 
   return (
     <>
-    {apps && (
-        <div className="row row-cols-3">
-          <div className='col'></div>
+    <div className="container">
+      <div className="row">
+        <div className='col-3'>
+        <LeftBar />
+      </div>
+        {apps && (
+          <div className='col-9'>
       
+          <div className="row row-cols-2">
           {apps.map((application, index) => (
             <Card
               key={index}
@@ -38,7 +37,10 @@ const Home = () => {
             />
           ))}
         </div>
+        </div>
     )}
+    </div>
+    </div>
     </>
   )
 }

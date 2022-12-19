@@ -1,7 +1,6 @@
 const { createClient } = require("@astrajs/collections");
 
 let astraClient = null;
-console.log("Getting tags")
 
 const getAstraClient = async () => {
   if (astraClient === null) {
@@ -22,7 +21,7 @@ const getCollection = async () => {
   console.log(documentClient)
   return documentClient
     .namespace(process.env.ASTRA_DB_KEYSPACE)
-    .collection("apptags");
+    .collection("tags1219");
 };
 
 module.exports = { getAstraClient, getCollection };
