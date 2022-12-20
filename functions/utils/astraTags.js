@@ -21,7 +21,7 @@ const getCollection = async () => {
   console.log(documentClient)
   return documentClient
     .namespace(process.env.ASTRA_DB_KEYSPACE)
-    .collection("tags1219");
+    .collection("tags1219f");
 };
 
 module.exports = { getAstraClient, getCollection };

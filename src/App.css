@@ -158,8 +158,8 @@ input {
 
 button {
     height: 30px;
-    width: 150px;
-    float: right;
+    float: center;
+    margin-bottom: 10px;
 }
 
 
@@ -4476,7 +4476,8 @@ a.badge-warning-v2.focus, a.badge-warning-v2:focus {
 
     .card-group > .card:not(:last-child) {
         border-bottom-right-radius: 0;
-        border-top-right-radius:0
+        border-top-right-radius:0;
+        margin-bottom: 15px;
     }
 
     .card-group > .card:not(:last-child) .card-header, .card-group > .card:not(:last-child) .card-img-top {
@@ -4502,7 +4503,7 @@ a.badge-warning-v2.focus, a.badge-warning-v2:focus {
 }
 
 .card-columns .card {
-    margin-bottom:1rem
+    margin-bottom:3rem
 }
 
 @media (min-width: 576px) {
