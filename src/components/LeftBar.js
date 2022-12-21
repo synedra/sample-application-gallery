@@ -3,8 +3,10 @@ import axios from 'axios'
 
 const LeftBar = () => {
   const [tagset, setTags] = useState(null)
-  let filters = [];
+
   
+  const [filters, setFilters] = useState([]);
+
   const fetchData = async () => {
     const results = await axios.get('/.netlify/functions/getTags')
     setTags(Object.values(results.data))
@@ -33,13 +35,14 @@ const LeftBar = () => {
         console.log("fitteredTag: " + filteredTag(tag));
         console.log("Deleting filter for" + tag.name)
          //filters[filters.indexOf(tag.name)]
-         filters.splice(filters.indexOf(tag.name),1)
-        // Change the button class to de-highlight
-        classText = 'btn btn-secondary'
+         //let name = filters.indexOf(tag.name);
+         //setFilters(filters.splice(name,1))        
+         setFilters(filters.filter(item => item !== tag.name))        
+         // Change the button class to de-highlight
       } else {
         console.log("Adding filter for" + tag.name)
-        filters.push(tag.name)
-        classText = 'btn btn-primary'
+        //filters.push(tag.name)
+        setFilters( arr => [...arr, tag.name]);
       // Change the button class to highlight
       }
       console.log(filters)
@@ -58,7 +61,7 @@ const LeftBar = () => {
             {
             tagset.map(
               (tag, index) => 
-              <button key={index} className={tag.name}
+              <button key={index} className={filteredTag(tag) ? 'btn btn-primary' : 'btn btn-secondary'}
               onClick=
               {(e) => onClick(tag, e)}
               >{tag.name}</button>
