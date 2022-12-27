@@ -5,7 +5,6 @@ const Home = (props) => {
   //console.log("HOME:" + JSON.stringify(props.apps))
   return (
     <>
-    
         {props.apps && (
           <div className='col-9'>
       
@@ -17,6 +16,7 @@ const Home = (props) => {
             onClick={props.onClick}
             filteredTag={props.filteredTag}
             filters={props.filters}
+            {...props} 
           />
           ))}
         </div>

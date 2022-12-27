@@ -9,11 +9,10 @@ const LeftBar = (props) => {
             {
             props.tagset.map(
               (tag, index) => 
-              <button key={index} className={props.filteredTag(tag) ? 'btn btn-primary' : 'btn btn-secondary'}
+              <button key={index} className={props.filteredTag(tag.name) ? 'btn btn-primary' : 'btn btn-secondary'}
               onClick=
-              {(e) => props.onClick(tag, e)}
+              {(e) => props.onClick(tag.name, e)}
               >{tag.name}</button>
-            
               
     )}
           </div>

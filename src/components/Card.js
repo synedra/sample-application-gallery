@@ -1,12 +1,12 @@
 import React from 'react'
 
-const Card = ({ application, onClick, filteredTag }) => {
-  let stacklist = null
+const Card = ( props ) => {
+  let application = props.application
+  let stacklist = ""
   if (application.stack && application.stack) {
      stacklist = "Stack: " + application.stack.join(", ");
   }
-  console.log(JSON.stringify(application))
-
+  
   return (
     <div className="col">
     <div className="card card-gallery shadow shadow--dark h-100">
@@ -23,11 +23,11 @@ const Card = ({ application, onClick, filteredTag }) => {
             {application.skilllevel}
             </span>
             <>
-              {application?.tags?.map((tag, index) => (
-                <button key={index} className={filteredTag(tag) ? 'btn btn-primary' : 'btn btn-secondary'}
+              {application?.tags?.map((tagname, index) => (
+                <button key={index} className={props.filteredTag(tagname) ? 'btn btn-primary' : 'btn btn-secondary'}
                 onClick=
-                {(e) => onClick(tag, e)}
-                >{tag}</button>
+                {(e) => props.onClick(tagname, e)}
+                >{tagname}</button>
             ))}
               {stacklist && <span> {stacklist}</span>}
             </>

@@ -19,18 +19,18 @@ const App = () => {
   const [workshops, setWorkshops] = useState(null)
   const [apps, setApps] = useState(null)
 
-  const fetchHomeApps = async () => {
-    const results = await axios.get('/.netlify/functions/getCategory?category=apps')
+  const fetchHomeApps = async (filterlist) => {
+    const results = await axios.get('/.netlify/functions/getCategory?category=apps&filters=' + filterlist)
     setApps(results.data)
   }
 
-  const fetchWorkshops = async () => {
-    const results = await axios.get('/.netlify/functions/getCategory?category=workshop')
+  const fetchWorkshops = async (filterlist) => {
+    const results = await axios.get('/.netlify/functions/getCategory?category=workshop&filters=' + filterlist)
     setWorkshops(results.data)
   }
 
-  const fetchStarters = async () => {
-    const results = await axios.get('/.netlify/functions/getCategory?category=starter')
+  const fetchStarters = async (filterlist) => {
+    const results = await axios.get('/.netlify/functions/getCategory?category=starter&filters=' + filterlist)
     setStarters(results.data)
   }
 
@@ -40,28 +40,29 @@ const App = () => {
   }
 
   useEffect(() => {
-    fetchWorkshops()
-    fetchStarters()
-    fetchHomeApps()
+    let filterlist = filters.join(',')
+    fetchWorkshops(filterlist)
+    fetchStarters(filterlist)
+    fetchHomeApps(filterlist)
     fetchData()
-  }, [])
+  }, [filters])
 
-  function filteredTag(tag) {
+  function filteredTag(tagname) {
     //console.log(filters.indexOf(tag.name))
     //console.log(tag.name)
-    return (filters.indexOf(tag.name) !== -1)
+    return (filters.indexOf(tagname) !== -1)
   }
 
-  const handleFilters = (tag, e) => {
+  const handleFilters = (tagname, e) => {
     e.preventDefault();
-    //console.log("TAGNAME " + tag.name)
-    //console.log(filters)
+    console.log("TAGNAME " + tagname)
+
     if (filters) {
-      if(filteredTag(tag)){
-        setFilters(filters.filter(item => item !== tag.name))        
+      if(filteredTag(tagname)){
+        setFilters(filters.filter(item => item !== tagname))        
       } else {
        // console.log("Adding filter for" + tag.name)
-        setFilters( arr => [...arr, tag.name]);
+        setFilters( arr => [...arr, tagname]);
       }
      //console.log(filters)
     }
@@ -82,7 +83,7 @@ const App = () => {
          <Switch>
             <Route path= "/workshops" render={(props) => <Workshops apps={workshops} filters={filters} onClick={handleFilters} filteredTag={filteredTag} {...props}/> }/>
             <Route path= "/starters" render={(props) => <StarterApps apps={starters} filters={filters} onClick={handleFilters} filteredTag={filteredTag} {...props} /> }/>
-            <Route path= "/" render={(props) => <Home apps={apps} filters={filters} onClick={handleFilters} filteredTag={filteredTag}{...props} /> }/>
+            <Route path= "/" render={(props) => <Home apps={apps} filters={filters} onClick={handleFilters} filteredTag={filteredTag} {...props} /> }/>
           </Switch>
           </div>
           </div>
