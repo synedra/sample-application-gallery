@@ -1,41 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Card from '../components/Card'
-import LeftBar from '../components/LeftBar'
-import axios from 'axios'
 
-const Workshops = () => {
-  const [apps, setApps] = useState(null)
-  
-  const fetchData = async () => {
-    const results = await axios.get('/.netlify/functions/getCategory?category=workshop')
-    setApps(results.data)
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
+const Workshops = (props) => {
+  //console.log("Workshops:" + JSON.stringify(props.apps))
   return (
     <>
-    <div className="container">
-      <div className="row">
-        <div className='col-3'>
-        <LeftBar />
-      </div>
-    {apps && (
+    
+    {props.apps && (
       <div className='container'>
         <div className="row row-cols-2">
-          {apps.map((application, index) => (
+          {props.apps.map((application, index) => (
             <Card
               key={index}
               application={application}
+              onClick={props.onClick}
+              filteredTag={props.filteredTag}
+              filters={props.filters}
             />
           ))}
         </div>
       </div>
     )}
-    </div>
-    </div>
     </>
   )
 }

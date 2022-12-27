@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Card = ({ application }) => {
+const Card = ({ application, onClick, filteredTag }) => {
   let stacklist = null
   if (application.stack && application.stack) {
      stacklist = "Stack: " + application.stack.join(", ");
@@ -24,7 +24,10 @@ const Card = ({ application }) => {
             </span>
             <>
               {application?.tags?.map((tag, index) => (
-                <button type="button" class="btn btn-secondary">{tag}</button>
+                <button key={index} className={filteredTag(tag) ? 'btn btn-primary' : 'btn btn-secondary'}
+                onClick=
+                {(e) => onClick(tag, e)}
+                >{tag}</button>
             ))}
               {stacklist && <span> {stacklist}</span>}
             </>

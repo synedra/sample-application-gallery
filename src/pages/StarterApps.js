@@ -1,42 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import Card from '../components/Card'
-import LeftBar from '../components/LeftBar'
-import axios from 'axios'
 
-const StarterApps = () => {
-  const [apps, setApps] = useState(null)
-  
-  const fetchData = async () => {
-    const results = await axios.get('/.netlify/functions/getCategory?category=starters')
-    setApps(Object.values(results.data[1]))
-  }
-
-  useEffect(() => {
-    fetchData()
-  }, [])
-
+const StarterApps = (props) => {
+  //console.log("Starter:" + JSON.stringify(props.apps))
   
   return (
     <>
-    <div className="container">
-      <div className="row">
-        <div className='col-3'>
-        <LeftBar />
-      </div>
-    {apps && (
+    {props.apps && (
       <div className='container'>
         <div className="row row-cols-2">
-          {apps.map((application, index) => (
+          {props.apps.map((application, index) => (
             <Card
-              key={index}
-              application={application}
-            />
+            key={index}
+            application={application}
+            onClick={props.onClick}
+            filteredTag={props.filteredTag}
+            filters={props.filters}
+          />
           ))}
         </div>
       </div>
     )}
-    </div>
-    </div>
     </>
   )
 }
